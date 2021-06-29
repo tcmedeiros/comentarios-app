@@ -1,13 +1,15 @@
 # Introdução
 
-Foi escolhido realizar todas as atividades utilizando ferramentas da AWS Services. Dentre as ferramentas utilizadas estão CodeCommit, CodePipeline, CodeBuild, VPC, EKS, Cloudwatch e API Gateway.
+Foi escolhido realizar todas as atividades utilizando ferramentas da AWS Services. Dentre as ferramentas utilizadas estão **CodeCommit**, **CodePipeline**, **CodeBuild**, **VPC**, **EKS**, **Cloudwatch** e **API Gateway**.
 
 
-# Repositório de Código
+# Repositório de Código Fonte
 
-O primeiro passo para uma esteira CI/CD é o repositório de códigos. Para essa etapa utilizamos o CodeCommit. Segue abaixo uma imagem do repositório:
+O primeiro passo para uma esteira CI/CD é o repositório de códigos. Para essa etapa utilizamos o **CodeCommit**. Segue abaixo uma imagem do repositório:
 
 ![image](https://user-images.githubusercontent.com/8555820/123844512-824d0f80-d8e9-11eb-8c1f-5fe4c9246466.png)
+
+Na pasta **app** fica os arquivos do desenvolviemnto da aplicação. Os arquivos **buildspec.yml**, **comentarios-app-deployment.yml**, **comentarios-app-service.yml** e **Dockerfile** são arquivos utilizados na configuração da esteira CI/CD. Apesar destes arquivos estarem dentro do repositório de código fonte, entendemos que o ideal é que estivesse apartado onde somente os resposáveis pela esteira tivesse acesso, como por exemplo o **S3**.
 
 
 * Start da app
