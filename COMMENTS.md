@@ -28,3 +28,8 @@ O CodeBuild executa as instruções que estão no **buildspec.yml**. A primeira 
 Nesta imagem podemos ver as imagens de **comentarios-app** com a aplicação e **python**, utilizada como base pelo **Dockerfile** para geração da imagem da aplicação.
 
 Com a imagem criada, são executados os arquivos **comentarios-app-deployment.yml** e **comentarios-app-service.yml** para deploy no EKS. O arquivo **comentarios-app-deployment.yml** contém informações sobre a aplicação e a quantidade de réplicas a serem criadas. O arquivo **comentarios-app-service.yml** trabalha na criação/atualização do load balance.
+
+
+# Hospedagem de Aplicações
+
+Na hospedagem de aplicações utilizamos o **EKS**, solução AWS baseado no kubernetes. Foi de entendimento que esta é uma boa solução pela facilidade da escalabilidade de aplicações e facilidade na migração para outras soluções de nuvens e ferramentas on premise.
