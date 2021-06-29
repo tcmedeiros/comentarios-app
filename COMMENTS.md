@@ -1,21 +1,14 @@
-# Considerações Gerais
+# Introdução
 
-Você deverá usar este repositório como o repo principal do projeto, i.e., todos os seus commits devem estar registrados aqui, pois queremos ver como você trabalha.
-
-A escolha de tecnologias é livre para a resolução do problema. Utilize os componentes e serviços que melhor domina pois a apresentação na entrega do desafio deverá ser como uma aula em que você explica em detalhes cada decisão que tomou.
-
-Registre tudo: testes que foram executados, ideias que gostaria de implementar se tivesse tempo (explique como você as resolveria, se houvesse tempo), decisões que foram tomadas e seus porquês, arquiteturas que foram testadas e os motivos de terem sido modificadas ou abandonadas. Crie um arquivo COMMENTS.md ou HISTORY.md no repositório para registrar essas reflexões e decisões.
+Foi escolhido realizar todas as atividades utilizando ferramentas da AWS Services. Dentre as ferramentas utilizadas estão CodeCommit, CodePipeline, CodeBuild, VPC, EKS, Cloudwatch e API Gateway.
 
 
-# O Problema
+# Repositório de Código
 
-O desafio que você deve resolver é a implantação da aplicação de Comentários em versão API (backend) usando ferramentas open source da sua preferência.
+O primeiro passo para uma esteira CI/CD é o repositório de códigos. Para essa etapa utilizamos o CodeCommit. Segue abaixo uma imagem do repositório:
 
-Você precisa criar o ambiente de execução desta API com o maior número de passos automatizados possível, inclusive a esteira de deploy.
+![image](https://user-images.githubusercontent.com/8555820/123844512-824d0f80-d8e9-11eb-8c1f-5fe4c9246466.png)
 
-A aplicação será uma API REST que está disponível neste repositório. Através dela os internautas enviam comentários em texto de uma máteria e acompanham o que outras pessoas estão falando sobre o assunto em destaque. O funcionamento básico da API consiste em uma rota para inserção dos comentários e uma rota para listagem.
-
-Os comandos de interação com a API são os seguintes:
 
 * Start da app
 
