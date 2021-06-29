@@ -15,7 +15,7 @@ Na pasta **app** fica os arquivos do desenvolviemnto da aplicação. Os arquivos
 
 Para o pipeline de build e deploy foram utilizados o **CodePipeline** e **CodeBuild**. Segue abaixo uma imagem da pipeline:
 
-![image](https://user-images.githubusercontent.com/8555820/123844512-824d0f80-d8e9-11eb-8c1f-5fe4c9246466.png)
+![image](https://user-images.githubusercontent.com/8555820/123866971-1cba4c80-d904-11eb-867e-b79275261d82.png)
 
 O **CodePipeline** cria um webhook, onde a cada modificação no repositório de código fonte é iniciado uma execução da pipeline. Para execução do build o **CodeBuild** é acionado. Segue abaixo uma imagem do build:
 
@@ -23,7 +23,7 @@ O **CodePipeline** cria um webhook, onde a cada modificação no repositório de
 
 O CodeBuild executa as instruções que estão no **buildspec.yml**. A primeira ação realizada é utilizar o arquivo **Dockerfile** para criação de uma imagem docker imutável, já com a aplicação dentro. Esta imagem é armazenada no repositório de imagens docker, o AWS **ECR**. Segue abaixo uma imagem do **ECR**:
 
-![image](https://user-images.githubusercontent.com/8555820/123847872-719e9880-d8ed-11eb-9a22-206722c59393.png)
+![image](https://user-images.githubusercontent.com/8555820/123867030-35c2fd80-d904-11eb-8ac0-b16eab7eb519.png)
 
 Nesta imagem podemos ver as imagens de **comentarios-app** com a aplicação e **python**, utilizada como base pelo **Dockerfile** para geração da imagem da aplicação.
 
@@ -32,4 +32,12 @@ Com a imagem criada, são executados os arquivos **comentarios-app-deployment.ym
 
 # Hospedagem de Aplicações
 
-Na hospedagem de aplicações utilizamos o **EKS**, solução AWS baseado no kubernetes. Foi de entendimento que esta é uma boa solução pela facilidade da escalabilidade de aplicações e facilidade na migração para outras soluções de nuvens e ferramentas on premise.
+Na hospedagem de aplicações utilizamos o **EKS**, solução AWS baseado no kubernetes. Foi de entendimento que esta é uma boa solução pela facilidade da escalabilidade de aplicações e facilidade na migração para outras soluções de nuvens e ferramentas on premise.  Segue abaixo uma imagem do cluster **EKS**:
+
+![image](https://user-images.githubusercontent.com/8555820/123867133-58edad00-d904-11eb-9afb-ddb886f83e46.png)
+
+Com relação aos nós do cluster, ao invés de utilizar Grupo de Nós Gerenciados (solução baseada em EC2), foi preferido o uso de Perfil do Fargate (solução baseada em ECS) para que não tivessemos preocupação com a escalabilidade dos nós. Segue abaixo uma imagem do **Perfil de Fargate**:
+
+![image](https://user-images.githubusercontent.com/8555820/123867219-74f14e80-d904-11eb-8b9f-f6a54aa30290.png)
+
+
