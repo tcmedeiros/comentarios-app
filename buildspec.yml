@@ -1,0 +1,27 @@
+version: 0.2
+    
+phases:
+  pre_build:
+    commands:
+      - echo Logando no Amazon ECR
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - echo Definindo o repositório ECR
+      - ECR=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - IMAGE=$ECR/$IMAGE_NAME
+      - echo Configurando kubectl com Amazon EKS
+      - aws eks update-kubeconfig --region $AWS_DEFAULT_REGION --name $AWS_EKS_CLUSTER 
+  build:
+    commands:
+      - echo Construindo imagem Docker
+      - docker build . -t current:latest --build-arg REPO=$ECR
+      - docker tag current:latest $IMAGE:$CODEBUILD_BUILD_NUMBER
+      - docker tag current:latest $IMAGE:latest
+  post_build:
+    commands:
+      - echo Enviando imagem para Repositório ERC
+      - docker push $IMAGE:$CODEBUILD_BUILD_NUMBER
+      - docker push $IMAGE:latest
+      - echo Publicando aplicação no Amazon EKS
+      - kubectl apply -f comentarios-app-deployment.yml
+      - kubectl apply -f comentarios-app-service.yml
+      
