@@ -124,7 +124,7 @@ Por último foram criado também dois *Security Groups*. Um pra acesso de todo t
 
 ![image](https://user-images.githubusercontent.com/8555820/124129364-19ce7180-da54-11eb-8ade-ddf07af66e15.png)
 
-> ATENÇÃO: Não foi tomado como objetivo nesta prova realizar melhores práticas de configurações de rede ou segurança .
+> ATENÇÃO: Não foi tomado como objetivo nesta prova realizar melhores práticas de configurações de rede ou segurança, tão pouco entrar em detalhes de granularidade de papéis e políticas criadas na aws para realização desta tarefa.
 
 
 # Hospedagem e Acesso da Aplicação
@@ -133,10 +133,24 @@ Na hospedagem de aplicações utilizamos o **ECS**. Foi criado um cluster com do
 
 ![image](https://user-images.githubusercontent.com/8555820/124130440-299a8580-da55-11eb-8c77-2bad18c2b710.png)
 
-Também foi criado um serviço chamado *comentarios-ecs-service* utilizando a *Task Definition* já citada com um *autoscaling* de mínimo 1 e máximo 3.
+Também foi criado um serviço chamado *comentarios-ecs-service* utilizando a *Task Definition* já citada com um *autoscaling* de mínimo 1 e máximo 3. Criamos um *Application Load Balancer* ouvindo da porta 80 e redirecionando para porta 8000 dos conteineres associados ao serviço *comentarios-ecs-service*, forma que o acesso público pudesse ser feito através dele. Segue a imagem do *Target Group* do "Load Balancer":
 
-Com relação aos nós do cluster, ao invés de utilizar Grupo de Nós Gerenciados (solução baseada em EC2), foi preferido o uso de Perfil do Fargate (solução baseada em ECS) para que não tivessemos preocupação com a escalabilidade dos nós. Segue abaixo uma imagem do **Perfil de Fargate**:
+![image](https://user-images.githubusercontent.com/8555820/124131645-631fc080-da56-11eb-8824-400f5b9d8c25.png)
 
-![image](https://user-images.githubusercontent.com/8555820/123867219-74f14e80-d904-11eb-8b9f-f6a54aa30290.png)
+Segue também uma imagem da aplicação funcionando:
+
+![image](https://user-images.githubusercontent.com/8555820/124131859-95c9b900-da56-11eb-96d8-1396c909c6e6.png)
+
+
+# Monitoramento
+
+O monitoramento foi feito com apoio do ***CloudWatch** em alguns pontos da esteira e no cluster. Segue uma imagem de métricas do cluster:
+
+![image](https://user-images.githubusercontent.com/8555820/124132854-9f075580-da57-11eb-9868-0f109a53fdec.png)
+
+
+# Considerações Finais
+
+Apesar de utilizado **ECS** e ele atender bem a diversas necessidades, é entendido que o **EKS** é uma ferramenta bem mais robusta e programável (se tratando de Iac), e seria de gosto que fosse utilizado se houvesse mais tempo para se dedicar a esta tarefa. Também seria de gosto que utiliza-se um *Load Balancer* interno e a exposição dos serviços fossem feitas através do *API Gateway*.
 
 
