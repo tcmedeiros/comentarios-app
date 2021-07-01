@@ -26,7 +26,7 @@ O primeiro passo para uma esteira CI/CD é o repositório de códigos. Para essa
 
 > ATENÇÃO: Não foi tomado como objetivo nesta prova realizar a esteira completa até produção. Para fins de prova de conhecimento realizamento a tarefa simulando somente um ambiente.
 
-Na pasta **app** fica os arquivos de código fonte da aplicação. Os arquivos **buildspec.yml** e **Dockerfile** são arquivos utilizados na configuração da esteira CI/CD. Apesar destes arquivos estarem dentro do repositório de código fonte, entendemos que o ideal é que estivesse apartado onde somente os resposáveis pela esteira tivesse acesso, como por exemplo o **S3**.
+Na pasta **app** fica os arquivos de código fonte da aplicação. Os arquivos **buildspec.yml** e **Dockerfile** são arquivos utilizados na configuração da esteira CI/CD. Apesar destes arquivos estarem dentro do repositório de código fonte, é de entendimento que o ideal é que estivesse apartado onde somente os resposáveis pela esteira tivesse acesso, como por exemplo o **S3**.
 
 ## Pipeline
 
@@ -103,22 +103,37 @@ Segue também uma imagem com algumas execuções do ***CodeBuild***:
 
 ### Deploy
 
-A fase de deploy parte do princípio que já está no path da pipeline o arquivo com informações na imagem da aplicação.
+A fase de deploy parte do princípio que já está no path da pipeline o arquivo com informações na imagem da aplicação. A partir deste arquivo é buscado a imagem **comentarios-app** no registry privado do **ECR**. Segue uma imagem do **ECR**:
 
-A primeira ação realizada é utilizar o arquivo **Dockerfile** para criação de uma imagem docker imutável, já com a aplicação dentro. Esta imagem é armazenada no repositório de imagens docker, o AWS **ECR**. Segue abaixo uma imagem do **ECR**:
+![image](https://user-images.githubusercontent.com/8555820/124126750-62386000-da51-11eb-9965-734f0233b7bd.png)
 
-![image](https://user-images.githubusercontent.com/8555820/123867030-35c2fd80-d904-11eb-8ac0-b16eab7eb519.png)
+Com a imagem buscada é feito um deploy para o serviço *comentarios-ecs-service* no ***ECS***.
 
-Nesta imagem podemos ver as imagens de **comentarios-app** com a aplicação e **python**, utilizada como base pelo **Dockerfile** para geração da imagem da aplicação.
+## Redes e Segurança
 
-Com a imagem criada, são executados os arquivos **comentarios-app-deployment.yml** e **comentarios-app-service.yml** para deploy no EKS. O arquivo **comentarios-app-deployment.yml** contém informações sobre a aplicação e a quantidade de réplicas a serem criadas. O arquivo **comentarios-app-service.yml** trabalha na criação/atualização do load balance.
+Para gerenciamento de redes foi utilizado o **VPC**. Junto a **VPC** criada com o nome *comentarios-vpc*, foram criadas duas *subnets* públicas. É de entendimento que pelo menos uma das *subnets* fosse privada com um *NAT Gateway* associada a ela e somente a *subnet* pública associada ao *Internet Gateway*. Segue a imagem da **VPC**:
+
+![image](https://user-images.githubusercontent.com/8555820/124129078-cc520480-da53-11eb-99dd-da02b0585cc6.png)
 
 
-# Hospedagem de Aplicações
+Segue a imagem das *subnets*:
 
-Na hospedagem de aplicações utilizamos o **EKS**, solução AWS baseado no kubernetes. Foi de entendimento que esta é uma boa solução pela facilidade da escalabilidade de aplicações e facilidade na migração para outras soluções de nuvens e ferramentas on premise.  Segue abaixo uma imagem do cluster **EKS**:
+![image](https://user-images.githubusercontent.com/8555820/124128887-957bee80-da53-11eb-886b-7468b3542d0f.png)
 
-![image](https://user-images.githubusercontent.com/8555820/123867133-58edad00-d904-11eb-9afb-ddb886f83e46.png)
+Por último foram criado também dois *Security Groups*. Um pra acesso de todo tráfego de instâncias dentro da própria VPC e outro com as portas 80 (API do ECS Cluster) e 8000 (ser acessado pelo Load Balancer). Segue imagem das *Security Groups*.
+
+![image](https://user-images.githubusercontent.com/8555820/124129364-19ce7180-da54-11eb-8ade-ddf07af66e15.png)
+
+> ATENÇÃO: Não foi tomado como objetivo nesta prova realizar melhores práticas de configurações de rede ou segurança .
+
+
+# Hospedagem e Acesso da Aplicação
+
+Na hospedagem de aplicações utilizamos o **ECS**. Foi criado um cluster com dois nós e chamado *ecs-cluster*. Criamos uma *Task Definition* chamada *comentarios-taskdefinition* baseada em nós de instâncias **EC2** configurada com a imagem do **ECR** *comentarios-app* na porta 8000. Segue a imagem do *ecs-cluster*:
+
+![image](https://user-images.githubusercontent.com/8555820/124130440-299a8580-da55-11eb-8c77-2bad18c2b710.png)
+
+Também foi criado um serviço chamado *comentarios-ecs-service* utilizando a *Task Definition* já citada com um *autoscaling* de mínimo 1 e máximo 3.
 
 Com relação aos nós do cluster, ao invés de utilizar Grupo de Nós Gerenciados (solução baseada em EC2), foi preferido o uso de Perfil do Fargate (solução baseada em ECS) para que não tivessemos preocupação com a escalabilidade dos nós. Segue abaixo uma imagem do **Perfil de Fargate**:
 
