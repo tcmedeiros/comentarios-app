@@ -1,18 +1,36 @@
-# Introdução
+## Introdução
 
-Foi escolhido realizar todas as atividades utilizando ferramentas da AWS Services. Dentre as ferramentas utilizadas estão **CodeCommit**, **CodePipeline**, **CodeBuild**, **ECR**, **VPC**, **EKS**, **Cloudwatch** e **API Gateway**.
+Foi escolhido realizar todas as atividades utilizando ferramentas da AWS Services. Dentre as ferramentas utilizadas estão **CodeCommit**, **CodePipeline**, **CodeBuild**, **ECR**, **VPC**, **ECS**, **CloudWatch** e **EC2**.
+
+## O código
+
+No código da aplicação foi adicionado um enpoint para utilização do health check.
+
+```python
+@app.route('/health-check')
+def api_health_check():
+    message = 'its ok!'
+    response = {
+            'status': 'SUCCESS',
+            'message': message,
+            }
+    return jsonify(response)
+```
 
 
-# Repositório de Código Fonte
+## Repositório de Código Fonte
 
-O primeiro passo para uma esteira CI/CD é o repositório de códigos. Para essa etapa utilizamos o **CodeCommit**. Segue abaixo uma imagem do repositório:
+O primeiro passo para uma esteira CI/CD é o repositório de códigos. Para essa etapa foi utilizado o **CodeCommit** e criado o repositório *comentarios-app*. Também foi criado o branch *dev*, o qual foi utilizado para realização de toda essa prova. Segue abaixo uma imagem do repositório:
 
-![image](https://user-images.githubusercontent.com/8555820/123844512-824d0f80-d8e9-11eb-8c1f-5fe4c9246466.png)
+![image](https://user-images.githubusercontent.com/8555820/124117838-f81abd80-da46-11eb-94bb-45e955db83e9.png)
 
-Na pasta **app** fica os arquivos do desenvolviemnto da aplicação. Os arquivos **buildspec.yml**, **comentarios-app-deployment.yml**, **comentarios-app-service.yml** e **Dockerfile** são arquivos utilizados na configuração da esteira CI/CD. Apesar destes arquivos estarem dentro do repositório de código fonte, entendemos que o ideal é que estivesse apartado onde somente os resposáveis pela esteira tivesse acesso, como por exemplo o **S3**.
+> ATENÇÃO: Não foi tomado como objetivo nesta prova realizar a esteira completa até produção. Para fins de prova de conhecimento realizamento a tarefa simulando somente um ambiente.
+
+Na pasta **app** fica os arquivos de código fonte da aplicação. Os arquivos **buildspec.yml** e **Dockerfile** são arquivos utilizados na configuração da esteira CI/CD. Apesar destes arquivos estarem dentro do repositório de código fonte, entendemos que o ideal é que estivesse apartado onde somente os resposáveis pela esteira tivesse acesso, como por exemplo o **S3**.
 
 # Pipeline
 
+Para realização do pipeline foi utilizado o **CodePipeline**.
 Para o pipeline de build e deploy foram utilizados o **CodePipeline** e **CodeBuild**. Segue abaixo uma imagem da pipeline:
 
 ![image](https://user-images.githubusercontent.com/8555820/123866971-1cba4c80-d904-11eb-867e-b79275261d82.png)
