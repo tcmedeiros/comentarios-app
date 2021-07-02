@@ -1,6 +1,6 @@
 ## Introdução
 
-Foi escolhido realizar todas as atividades utilizando ferramentas da AWS Services. Dentre as ferramentas utilizadas estão **CodeCommit**, **CodePipeline**, **CodeBuild**, **ECR**, **VPC**, **ECS**, **CloudWatch** e **EC2**.
+Foi escolhido realizar todas as atividades utilizando ferramentas da AWS Services. Dentre as ferramentas utilizadas estão **CodeCommit**, **CodePipeline**, **CodeBuild**, **ECR**, **VPC**, **SNS**, **ECS**, **CloudWatch** e **EC2**.
 
 ## O código
 
@@ -144,9 +144,9 @@ Segue também uma imagem da aplicação funcionando:
 
 # Monitoramento
 
-O monitoramento foi feito com apoio do ***CloudWatch** em alguns pontos da esteira e no cluster. Segue uma imagem de métricas do cluster:
+O monitoramento foi feito com apoio do **CloudWatch** em alguns pontos da esteira e no cluster. Com o consumo dos recursos atingindo o limite estabelecido, é informado por email pelo **SNS** para que ações proativas sejam tomadas. foi criado o painel *comentarios-dash* como mostra a imagem a seguir:
 
-![image](https://user-images.githubusercontent.com/8555820/124132854-9f075580-da57-11eb-9868-0f109a53fdec.png)
+![image](https://user-images.githubusercontent.com/8555820/124270455-9cb60180-db12-11eb-94ed-2e66cb836201.png)
 
 
 # Considerações Finais
