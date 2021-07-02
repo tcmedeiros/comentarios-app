@@ -44,7 +44,7 @@ Nessa fase é feito um clone do repositório de código no **CodeCommit**. Foi c
 
 ### Build
 
-A fase de build parte do princípio que já estão no path da pipeline os arquivos obtidos pela fase de source. Nessa fase entra em cena o **CodeBuild**, onde foid criado o build *comentarios-build*, que executa as instruções que estão no **buildspec.yml**. Foram configuradas duas variáveis de ambiente para a execução do build: AWS_ACCOUNT_ID (id da conta aws utilizada) e IMAGE_NAME (nome da imagem que será gerada com a aplicação). Principalmente AWS_ACCOUNT_ID é uma informação segura e não deve ficar em código. Segue o código do *buildspec.yml*:
+A fase de build parte do princípio que já estão no path da pipeline os arquivos obtidos pela fase de source. Nessa fase entra em cena o **CodeBuild**, onde foid criado o build *comentarios-build*, que executa as instruções que estão no *buildspec.yml*. Foram configuradas duas variáveis de ambiente para a execução do build: AWS_ACCOUNT_ID (id da conta aws utilizada) e IMAGE_NAME (nome da imagem que será gerada com a aplicação). Principalmente AWS_ACCOUNT_ID é uma informação segura e não deve ficar em código. Segue o código do *buildspec.yml*:
 
 ```yaml
 version: 0.2
@@ -96,18 +96,18 @@ Foi colocado a imagem do *python:3* no registry privado da aws por que se for re
 
 ![image](https://user-images.githubusercontent.com/8555820/124125353-e5f14d00-da4f-11eb-8add-0690185fa03b.png)
 
-Segue também uma imagem com algumas execuções do ***CodeBuild***:
+Segue também uma imagem com algumas execuções do **CodeBuild**:
 
 ![image](https://user-images.githubusercontent.com/8555820/124125695-4e402e80-da50-11eb-99b0-2fd861a0e43e.png)
 
 
 ### Deploy
 
-A fase de deploy parte do princípio que já está no path da pipeline o arquivo com informações na imagem da aplicação. A partir deste arquivo é buscado a imagem **comentarios-app** no registry privado do **ECR**. Segue uma imagem do **ECR**:
+A fase de deploy parte do princípio que já está no path da pipeline o arquivo com informações na imagem da aplicação. A partir deste arquivo é buscado a imagem *comentarios-app* no registry privado do **ECR**. Segue uma imagem do **ECR**:
 
 ![image](https://user-images.githubusercontent.com/8555820/124126750-62386000-da51-11eb-9965-734f0233b7bd.png)
 
-Com a imagem buscada é feito um deploy para o serviço *comentarios-ecs-service* no ***ECS***.
+Com a imagem buscada é feito um deploy para o serviço *comentarios-ecs-service* no **ECS**.
 
 ## Redes e Segurança
 
@@ -133,7 +133,7 @@ Na hospedagem de aplicações utilizamos o **ECS**. Foi criado um cluster com do
 
 ![image](https://user-images.githubusercontent.com/8555820/124130440-299a8580-da55-11eb-8c77-2bad18c2b710.png)
 
-Também foi criado um serviço chamado *comentarios-ecs-service* utilizando a *Task Definition* já citada com um *autoscaling* de mínimo 1 e máximo 3. Criamos um *Application Load Balancer* ouvindo da porta 80 e redirecionando para porta 8000 dos conteineres associados ao serviço *comentarios-ecs-service*, forma que o acesso público pudesse ser feito através dele. Segue a imagem do *Target Group* do "Load Balancer":
+Também foi criado um serviço chamado *comentarios-ecs-service* utilizando a *Task Definition* já citada com um *autoscaling* de mínimo 1 e máximo 3. Criamos um *Application Load Balancer* ouvindo da porta 80 e redirecionando para porta 8000 dos conteineres associados ao serviço *comentarios-ecs-service*, forma que o acesso público pudesse ser feito através dele. Segue a imagem do *Target Group* do *Load Balancer*:
 
 ![image](https://user-images.githubusercontent.com/8555820/124131645-631fc080-da56-11eb-8824-400f5b9d8c25.png)
 
