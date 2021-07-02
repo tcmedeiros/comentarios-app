@@ -26,7 +26,7 @@ O primeiro passo para uma esteira CI/CD é o repositório de códigos. Para essa
 
 > ATENÇÃO: Não foi tomado como objetivo nesta prova realizar a esteira completa até produção. Para fins de prova de conhecimento realizamento a tarefa simulando somente um ambiente.
 
-Na pasta **app** fica os arquivos de código fonte da aplicação. Os arquivos **buildspec.yml** e **Dockerfile** são arquivos utilizados na configuração da esteira CI/CD. Apesar destes arquivos estarem dentro do repositório de código fonte, é de entendimento que o ideal é que estivesse apartado onde somente os resposáveis pela esteira tivesse acesso, como por exemplo o **S3**.
+Na pasta *app* fica os arquivos de código fonte da aplicação. Os arquivos *buildspec.yml* e *Dockerfile* são arquivos utilizados na configuração da esteira CI/CD. Apesar destes arquivos estarem dentro do repositório de código fonte, é de entendimento que o ideal é que estivesse apartado onde somente os resposáveis pela esteira tivesse acesso, como por exemplo o **S3**.
 
 ## Pipeline
 
@@ -44,7 +44,7 @@ Nessa fase é feito um clone do repositório de código no **CodeCommit**. Foi c
 
 ### Build
 
-A fase de build parte do princípio que já estão no path da pipeline os arquivos obtidos pela fase de source. Nessa fase entra em cena o ***CodeBuild***, onde foid criado o build *comentarios-build*, que executa as instruções que estão no **buildspec.yml**. Foram configuradas duas variáveis de ambiente para a execução do build: AWS_ACCOUNT_ID (id da conta aws utilizada) e IMAGE_NAME (nome da imagem que será gerada com a aplicação). Principalmente AWS_ACCOUNT_ID é uma informação segura e não deve ficar em código. Segue o código do **buildspec.yml**:
+A fase de build parte do princípio que já estão no path da pipeline os arquivos obtidos pela fase de source. Nessa fase entra em cena o **CodeBuild**, onde foid criado o build *comentarios-build*, que executa as instruções que estão no **buildspec.yml**. Foram configuradas duas variáveis de ambiente para a execução do build: AWS_ACCOUNT_ID (id da conta aws utilizada) e IMAGE_NAME (nome da imagem que será gerada com a aplicação). Principalmente AWS_ACCOUNT_ID é uma informação segura e não deve ficar em código. Segue o código do *buildspec.yml*:
 
 ```yaml
 version: 0.2
